@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
-import 'config.dart';
+//import 'config.dart';
 
 void main() {
   runApp(new MyApp());
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   initPlatformState() async {
-    await _locationService.changeSettings(accuracy: LocationAccuray.HIGH, interval: 1000);
+    await _locationService.changeSettings(accuracy: LocationAccuracy.HIGH, interval: 1000);
     
     LocationData location;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
 
   slowRefresh() async {
     _locationSubscription.cancel();
-    await _locationService.changeSettings(accuracy: LocationAccuray.BALANCED, interval: 10000);
+    await _locationService.changeSettings(accuracy: LocationAccuracy.BALANCED, interval: 10000);
     _locationSubscription = _locationService.onLocationChanged().listen((LocationData result) {
       if(mounted){
         setState(() {
@@ -113,8 +113,8 @@ class _MyAppState extends State<MyApp> {
 
     widgets.add(new Center(
         child: new Text(_currentLocation != null
-            ? 'Continuous location: ${_currentLocation.latitude} & ${_currentLocation.longitude} & ${_currentLocation.heading}\n'
-            : 'Error: $error\n')));
+            ? 'Continuous location: \nlat: ${_currentLocation.latitude} & long: ${_currentLocation.longitude} \nalt: ${_currentLocation.altitude}m\n'
+            : 'Error: $error\n', textAlign: TextAlign.center)));
 
     widgets.add(new Center(
       child: new Text(_permission 
