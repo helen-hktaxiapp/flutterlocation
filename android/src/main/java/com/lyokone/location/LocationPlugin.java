@@ -130,9 +130,13 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
                 createLocationRequest();
                 createPermissionsResultListener();
                 buildLocationSettingsRequest();
-                result.success(1);
+                if (result != null) {
+                    result.success(1);
+                }
             } catch(Exception e) {
-                result.error("CHANGE_SETTINGS_ERROR", "An unexcepted error happened during location settings change.", null);
+                if (result != null) {
+                    result.error("CHANGE_SETTINGS_ERROR", "An unexcepted error happened during location settings change.", null);
+                }
             }
 
         } else if (call.method.equals("getLocation")) {
@@ -145,9 +149,13 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
 
         } else if (call.method.equals("hasPermission")) {
             if (checkPermissions()) {
-                result.success(1);
+                if (result != null) {
+                    result.success(1);
+                }
             } else {
-                result.success(0);
+                if (result != null) {
+                    result.success(0);
+                }
             }
         } else if (call.method.equals("requestPermission")) {
             this.waitingForPermission = true;
@@ -158,7 +166,9 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
         } else if (call.method.equals("requestService")) {
             requestService(result);
         } else {
-            result.notImplemented();
+            if (result != null) {
+                result.notImplemented();
+            }
         }
     }
 
@@ -174,9 +184,13 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
                     if (waitingForPermission) {
                         waitingForPermission = false;
                         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            result.success(1);
+                            if (result != null) {
+                                result.success(1);
+                            }
                         } else {
-                            result.success(0);
+                            if (result != null) {
+                                result.success(0);
+                            }
                         }
                         result = null;
                     }
@@ -347,7 +361,9 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
 
     public void requestService(final Result result) {
         if (this.checkServiceEnabled(null)) {
-            result.success(1);
+            if (result != null) {
+                result.success(1);
+            }
             return;
         }
         this.result = result;
@@ -368,8 +384,10 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        result.error("SERVICE_STATUS_DISABLED",
-                                "Failed to get location. Location services disabled", null);
+                        if (result != null) {
+                            result.error("SERVICE_STATUS_DISABLED",
+                                    "Failed to get location. Location services disabled", null);
+                        }
                     }
                 }
             });
