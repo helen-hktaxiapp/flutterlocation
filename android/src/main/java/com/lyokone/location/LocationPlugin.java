@@ -228,7 +228,9 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case GPS_ENABLE_REQUEST:
-                if (resultCode == Activity.RESULT_OK) {
+                if (this.result == null) {
+                    return false;
+                } else if (resultCode == Activity.RESULT_OK) {
                     this.result.success(1);
                 } else {
                     this.result.success(0);
