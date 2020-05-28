@@ -429,15 +429,15 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
     @Override
     public void onListen(Object arguments, final EventSink eventsSink) {
         events = eventsSink;
-        if (!checkPermissions()) {
-            requestPermissions();
-            if (this.locationPermissionState == PackageManager.PERMISSION_DENIED) {
-                result.error("PERMISSION_DENIED",
-                        "The user explicitly denied the use of location services for this app or location services are currently disabled in Settings.",
-                        null);
-            }
-        }     
-        startRequestingLocation();   
+        // if (!checkPermissions()) {
+        //     requestPermissions();
+        //     if (this.locationPermissionState == PackageManager.PERMISSION_DENIED) {
+        //         result.error("PERMISSION_DENIED",
+        //                 "The user explicitly denied the use of location services for this app or location services are currently disabled in Settings.",
+        //                 null);
+        //     }
+        // }     
+        // startRequestingLocation();   
     }
 
     @Override
